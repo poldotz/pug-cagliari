@@ -1,0 +1,22 @@
+version: '3.2'
+
+services:
+  nginx:
+    container_name: docker-project-nginx
+    build:
+      context: .docker/nginx
+      args:
+        php_fpm_host_value: 127.0.0.1
+      cache_from:
+        - poldotz/pug-nginx:base
+    image: poldotz/pug-nginx:production
+
+  php-fpm:
+    container_name: docker-project-php-fpm
+    build:
+      context: .docker/php-fpm/production
+      cache_from:
+        - poldotz/pug-php-fpm:base
+    image: poldotz/pug-php-fpm:production
+    volumes:
+      - ./:/var/www/html

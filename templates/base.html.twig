@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Benvenuto al Pug Cagliari! 2019{% endblock %}</title>
+        {% block stylesheets %}
+            <link href="https://getbootstrap.com/docs/4.3/dist/css/bootstrap.css" rel="stylesheet">
+            <link href="https://getbootstrap.com/docs/4.3/examples/cover/cover.css" rel="stylesheet">
+
+        {% endblock %}
+    </head>
+    <body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        {% block body %}
+            <main role="main" class="inner cover">
+                <h1 class="cover-heading">{{ message }}</h1>
+                <img width="600px" height="600px" src="{{ asset('images/gaggi_colore_b.png') }}" alt="Pug Cagliari!" class="" />
+            </main>
+        {% endblock %}
+    </div>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

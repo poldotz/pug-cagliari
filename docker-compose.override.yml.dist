@@ -1,0 +1,33 @@
+version: '3.2'
+
+services:
+  nginx:
+    image: poldotz/pug-nginx:base
+    volumes:
+      - ./public:/var/www/html/public
+    networks:
+      app_net:
+        ipv4_address: 172.30.0.2
+    ports:
+      - 80:80
+
+  php-fpm:
+    build:
+      context: .docker/php-fpm/development
+    image: poldotz/pug-php-fpm:dev
+    environment:
+      XDEBUG_CONFIG: "remote_host=${XDEBUG_HOST:-172.30.0.1} remote_port=${XDEBUG_PORT:-9000} idekey=${XDEBUG_IDEKEY:-PHPSTORM}"
+      PHP_IDE_CONFIG: "serverName=localhost"
+    volumes:
+      - ./:/var/www/html
+    networks:
+      app_net:
+        ipv4_address: 172.30.0.3
+
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.30.0.0/24

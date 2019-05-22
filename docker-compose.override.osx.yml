@@ -1,0 +1,27 @@
+version: '3.2'
+
+services:
+  nginx:
+    image: docker-php/nginx:base
+    volumes:
+      - ./public:/var/www/html/public
+    ports:
+      - 80:80
+
+  php-fpm:
+    build:
+      context: .docker/php-fpm/development
+    image: docker-php/php-fpm:dev
+    environment:
+      XDEBUG_CONFIG: "remote_host=${XDEBUG_PORT:-docker.for.mac.host.internal} remote_port=${XDEBUG_PORT:-9000} idekey=${XDEBUG_IDEKEY:-PHPSTORM}"
+      PHP_IDE_CONFIG: "serverName=localhost"
+    volumes:
+      - "nfsmount::/var/www/html"
+
+volumes:
+  nfsmount:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+      device: ":${PWD}"
