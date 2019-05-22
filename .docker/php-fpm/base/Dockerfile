@@ -25,8 +25,8 @@ RUN apk --no-cache add \
         memcached \
         mongodb \
         && pecl clear-cache \
-        && docker-php-source delete \
         && apk del .phpize-deps .ext-build-deps
+        && docker-php-source delete \
 
 RUN usermod -u 1000 www-data \
     && groupmod -g 1000 www-data \
