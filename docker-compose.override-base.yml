@@ -1,0 +1,19 @@
+version: '3.2'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: .docker/nginx/Dockerfile
+      args:
+        php_fpm_host_value: php-fpm
+    image: poldotz/pug-nginx:base
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: .docker/php-fpm/base/Dockerfile
+      args:
+        composer_version: 1.8.5
+        composer_auth_json: ${COMPOSER_AUTH}
+    image: poldotz/pug-php-fpm:base

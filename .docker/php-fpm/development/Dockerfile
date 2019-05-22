@@ -14,4 +14,4 @@ RUN apk add --no-cache --virtual .xdebug-build-deps $PHPIZE_DEPS \
 
 USER www-data
 
-COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+COPY .docker/php-fpm/development/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini

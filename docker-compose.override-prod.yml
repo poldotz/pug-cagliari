@@ -1,0 +1,18 @@
+version: '3.2'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: .docker/nginx/Dockerfile
+      args:
+        php_fpm_host_value: 127.0.0.1
+    image: poldotz/pug-nginx:production
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: .docker/php-fpm/production/Dockerfile
+      args:
+        app_env: prod
+    image: poldotz/pug-php-fpm:production

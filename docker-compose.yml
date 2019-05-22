@@ -3,24 +3,9 @@ version: '3.2'
 services:
   nginx:
     container_name: docker-project-nginx
-    build:
-      context: .docker/nginx
-      args:
-        php_fpm_host_value: php-fpm
-    image: poldotz/pug-nginx:base
-    depends_on:
-      - php-fpm
 
   php-fpm:
     container_name: docker-project-php-fpm
-    build:
-      context: .docker/php-fpm/base
-      args:
-        composer_version: 1.8.5
-        composer_auth_json: ${COMPOSER_AUTH}
-    image: poldotz/pug-php-fpm:base
-    depends_on:
-      - memcached
 
   memcached:
     container_name: docker-project-memcached

@@ -2,16 +2,19 @@ FROM docker-php/php-fpm:base
 
 LABEL maintainer="leonardo.podda@facile.it"
 
-ARG COMPOSER_FLAGS="--no-dev --optimize-autoloader --classmap-authoritative --no-interaction --no-suggest --no-progress --ansi --prefer-dist"
+ARG app_env=prod
+ENV APP_ENV=$app_env
+ENV APP_DEBUG=false
 
-RUN chown -R www-data:www-data /var/www/html
+ARG COMPOSER_FLAGS=" --optimize-autoloader --classmap-authoritative --no-interaction --no-suggest --no-progress --ansi --prefer-dist"
+
 USER www-data
 
-COPY composer.* ./
+COPY --chown=www-data:www-data composer.* ./
+RUN composer install $COMPOSER_FLAGS --no-scripts --no-autoloader \
+    && composer clear-cache
 
-RUN composer install $COMPOSER_FLAGS --no-scripts --no-autoloader --no-dev
+COPY --chown=www-data:www-data . .
 
-COPY . .
-
-RUN composer install $COMPOSER_FLAGS --optimize-autoloader --no-dev \
+RUN composer install $COMPOSER_FLAGS \
     && bin/console cache:warmup

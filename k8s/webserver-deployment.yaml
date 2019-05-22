@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pug-cagliari-webserver-deployment
+  labels:
+    app: php-docker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pug-cagliari-webserver
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: pug-cagliari-webserver
+    spec:
+      containers:
+      - name: pug-nginx
+        imagePullPolicy: Always
+        image: poldotz/pug-nginx:production
+        ports:
+        - name: http
+          containerPort: 80
+        resources:
+          limits:
+            cpu: 200m
+            memory: 384Mi
+          requests:
+            cpu: 150m
+            memory: 64Mi
+      - name: pug-phpfpm
+        image: poldotz/pug-php-fpm:production
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9000
+        resources:
+          limits:
+            cpu: 300m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi

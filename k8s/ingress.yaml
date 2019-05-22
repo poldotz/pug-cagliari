@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pug-cagliari-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/add-base-url: "true"
+  labels:
+    app: php-docker
+spec:
+  rules:
+  - host: pug-cagliari.local
+    http:
+      paths:
+        - backend:
+            serviceName: nginx-service
+            servicePort: 80
