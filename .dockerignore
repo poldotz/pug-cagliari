@@ -1,0 +1,14 @@
+/k8s
+/node_modules
+/tests
+/var/*
+/vendor/*
+/.dockerignore
+/.env.test
+/.git
+/.gitignore
+/docker-compose*
+/*.md
+/phpunit*
+/yarn.lock
+/symfony.lock

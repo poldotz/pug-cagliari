@@ -6,7 +6,7 @@ ARG app_env=prod
 ENV APP_ENV=$app_env
 ENV APP_DEBUG=false
 
-ARG COMPOSER_FLAGS=" --optimize-autoloader --classmap-authoritative --no-interaction --no-suggest --no-progress --ansi --prefer-dist"
+ARG COMPOSER_FLAGS=" --no-dev --optimize-autoloader --classmap-authoritative --no-interaction --no-suggest --no-progress --ansi --prefer-dist"
 
 USER www-data
 
